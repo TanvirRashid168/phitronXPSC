@@ -1,0 +1,50 @@
+# class.py
+
+# 6-7. People
+people = [
+    {
+        'first': 'albert',
+        'last': 'einstein',
+        'location': 'princeton'
+    },
+    {
+        'first': 'marie',
+        'last': 'curie',
+        'location': 'paris'
+    },
+    # Add more dictionaries representing different people here
+    {
+        'first': 'isaac',
+        'last': 'newton',
+        'location': 'cambridge'
+    },
+    {
+        'first': 'charles',
+        'last': 'darwin',
+        'location': 'down house'
+    }
+]
+
+print("People:")
+for person in people:
+    full_name = f"{person['first'].title()} {person['last'].title()}"
+    location = person['location'].title()
+    print(f"Name: {full_name}")
+    print(f"Location: {location}")
+    print()  # Empty line for separation
+
+# 6-8. Pets
+pets = [
+    {'kind': 'dog', 'owner': 'John'},
+    {'kind': 'cat', 'owner': 'Alice'},
+    {'kind': 'bird', 'owner': 'Bob'},
+    # Add more dictionaries representing different pets here
+]
+
+print("Pets:")
+for pet in pets:
+    kind = pet['kind']
+    owner = pet['owner']
+    print(f"Kind: {kind}")
+    print(f"Owner: {owner}")
+    print()  # Empty line for separation
