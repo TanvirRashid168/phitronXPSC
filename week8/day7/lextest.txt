@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX_TOKENS 100
+#define MAX_TOKEN_LENGTH 256
+
+// DFA states
+typedef enum {
+    START,
+    IDENTIFIER,
+    CONSTANT,
+    UNKNOWN
+} State;
+
+// List of keywords
+const char *keywords[] = {
+    "auto", "break", "case", "char", "const", "continue", "default", "do",
+    "double", "else", "enum", "extern", "float", "for", "goto", "if",
+    "int", "long", "register", "return", "short", "signed", "sizeof", "static",
+    "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"
+};
+#define KEYWORD_COUNT (sizeof(keywords) / sizeof(keywords[0]))
+
+// Function to check if a token is a keyword
+int is_keyword(const char *token) {
+    for (int i = 0; i < KEYWORD_COUNT; i++) {
+        if (strcmp(token, keywords[i]) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// Function to determine the type of a token using DFA logic
+const char* get_token_type(const char *token) {
+    State state = START;
+    for (int i = 0; token[i] != '\0'; i++) {
+        char ch = token[i];
+        switch (state) {
+            case START:
+                if (isalpha(ch) || ch == '_') {
+                    state = IDENTIFIER;
+                } else if (isdigit(ch)) {
+                    state = CONSTANT;
+                } else {
+                    state = UNKNOWN;
+                }
+                break;
+            case IDENTIFIER:
+                if (isalnum(ch) || ch == '_') {
+                    state = IDENTIFIER;
+                } else {
+                    state = UNKNOWN;
+                }
+                break;
+            case CONSTANT:
+                if (isdigit(ch)) {
+                    state = CONSTANT;
+                } else {
+                    state = UNKNOWN;
+                }
+                break;
+            default:
+                return "Unknown";
+        }
+    }
+    if (state == IDENTIFIER) {
+        return is_keyword(token) ? "Keyword" : "Identifier";
+    }
+    if (state == CONSTANT) {
+        return "Constant";
+    }
+    return 
